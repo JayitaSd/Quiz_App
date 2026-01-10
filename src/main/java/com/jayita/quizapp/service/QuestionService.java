@@ -1,26 +1,29 @@
 package com.jayita.quizapp.service;
 
-import com.jayita.quizapp.Question;
 import com.jayita.quizapp.dao.QuestionDao;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.jayita.quizapp.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class QuestionService {
-    @Autowired
-    QuestionDao questionDao;
-    public List<Question> getAllQuestions(){
+
+    private final QuestionDao questionDao;
+
+    public QuestionService(QuestionDao questionDao) {
+        this.questionDao = questionDao;
+    }
+
+    public List<Question> getAllQuestions() {
         return questionDao.findAll();
     }
 
-    public List<Question> getQuestionsByCategory(String category) {
+    public List<Question> getByCategory(String category) {
         return questionDao.findByCategory(category);
     }
 
-    public String addQuestion(Question question) {
-        questionDao.save(question);
-        return "success";
+    public Question save(Question q) {
+        return questionDao.save(q);
     }
 }
